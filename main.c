@@ -3,48 +3,47 @@
 #include <string.h>
 
 // Função de criptografia simples para a senha
-void encryptPassword(char *password) {
-    for (int i = 0; password[i] != '\0'; ++i) {
-        password[i] = password[i] + 3; // Shift de 3 posições na tabela ASCII
+void criptografarSenha(char *senha) {
+    for (int i = 0; senha[i] != '\0'; ++i) {
+        senha[i] = senha[i] + 3; 
     }
 }
 
 // Estrutura para armazenar os dados da indústria
-struct Industry {
-    char username[50];
-    char password[50];
-    char responsibleName[50];
-    char companyName[50];
+struct Industria {
+    char usuario[50];
+    char senha[50];
+    char nomeDoResponsavel[50];
+    char nomeDaEmpresa[50];
     char cnpj[15];
-    char socialReason[50];
-    char fantasyName[50];
-    char phone[15];
-    char addressStreet[50];
-    int addressNumber;
-    char addressNeighborhood[50];
-    char addressCity[50];
-    char addressState[3];
-    char addressZipCode[10];
+    char razaoSocial[50];
+    char telefone[15];
+    char rua[50];
+    int numero;
+    char bairro[50];
+    char cidade[50];
+    char estado[3];
+    char cep[10];
     char email[50];
-    char openingDate[11];
-    float wasteQuantity;
-    float estimatedCost;
+    char dataDeAbertura[11];
+    float quantResiduos;
+    float custoEstimado;
 };
 
 // Função para realizar o login
-int login(struct Industry *industry) {
-    char inputUsername[50];
-    char inputPassword[50];
+int login(struct Industria *industria) {
+    char inserirUsuario[50];
+    char inserirSenha[50];
 
-    printf("Informe o usuário: ");
-    scanf("%s", inputUsername);
+    printf("Informe o usuario: ");
+    scanf("%s", inserirUsuario);
 
     printf("Informe a senha: ");
-    scanf("%s", inputPassword);
-    encryptPassword(inputPassword);
+    scanf("%s", inserirSenha);
+    criptografarSenha(inserirSenha);
 
-    if (strcmp(inputUsername, industry->username) == 0 &&
-        strcmp(inputPassword, industry->password) == 0) {
+    if (strcmp(inserirUsuario, industria->usuario) == 0 &&
+        strcmp(inserirSenha, industria->senha) == 0) {
         return 1; // Login bem-sucedido
     } else {
         return 0; // Login falhou
@@ -52,84 +51,80 @@ int login(struct Industry *industry) {
 }
 
 // Função para cadastrar os dados da indústria
-void registerData(struct Industry *industry) {
-    printf("\nInforme os dados da indústria:\n");
+void registrarDados(struct Industria *industria) {
+    printf("\nInforme os dados da industria:\n");
 
-    printf("Nome do Responsável: ");
-    scanf("%s", industry->responsibleName);
+    printf("Nome do Responsavel: ");
+    scanf("%s", industria->nomeDoResponsavel);
 
     printf("Nome da Empresa: ");
-    scanf("%s", industry->companyName);
+    scanf("%s", industria->nomeDaEmpresa);
 
     printf("CNPJ: ");
-    scanf("%s", industry->cnpj);
-
-    printf("Razão Social: ");
-    scanf("%s", industry->socialReason);
-
-    printf("Nome Fantasia: ");
-    scanf("%s", industry->fantasyName);
+    scanf("%s", industria->cnpj);
+    
+    printf("Razao Social: ");
+    scanf("%s", industria->razaoSocial);
 
     printf("Telefone: ");
-    scanf("%s", industry->phone);
+    scanf("%s", industria->telefone);
 
     printf("Endereço (Rua): ");
-    scanf("%s", industry->addressStreet);
+    scanf("%s", industria->rua);
 
     printf("Número: ");
-    scanf("%d", &industry->addressNumber);
+    scanf("%d", &industria->numero);
 
     printf("Bairro: ");
-    scanf("%s", industry->addressNeighborhood);
+    scanf("%s", industria->bairro);
 
     printf("Cidade: ");
-    scanf("%s", industry->addressCity);
+    scanf("%s", industria->cidade);
 
     printf("Estado (Sigla): ");
-    scanf("%s", industry->addressState);
+    scanf("%s", industria->estado);
 
     printf("CEP: ");
-    scanf("%s", industry->addressZipCode);
+    scanf("%s", industria->cep);
 
     printf("E-mail: ");
-    scanf("%s", industry->email);
+    scanf("%s", industria->email);
 
     printf("Data de Abertura: ");
-    scanf("%s", industry->openingDate);
+    scanf("%s", industria->dataDeAbertura);
 
-    industry->wasteQuantity = 0.0;
-    industry->estimatedCost = 0.0;
+    industria->quantResiduos = 0.0;
+    industria->custoEstimado = 0.0;
 }
 
-// Função principal
 int main() {
-    struct Industry industry;
-    int choice;
+    struct Industria industria;
+    int escolha;
 
     // Configuração de dados de exemplo
-    strcpy(industry.username, "usuario");
-    strcpy(industry.password, "senha");
-    encryptPassword(industry.password);
+    strcpy(industria.usuario, "usuario");
+    strcpy(industria.senha, "senha");
+    criptografarSenha(industria.senha);
 
     do {
-        printf("\nEscolha a opção:\n");
+        printf("\nEscolha a opçao:\n");
         printf("1 - Login\n");
-        printf("2 - Cadastrar Dados da Indústria\n");
+        printf("2 - Cadastrar Dados da Industria\n");
         printf("3 - Atualizar Quantidades de Resíduos e Valor Estimado\n");
         printf("0 - Sair\n");
-        printf("Opção: ");
-        scanf("%d", &choice);
+        printf("Opcao: ");
+        scanf("%d", &escolha);
 
-        switch (choice) {
+        switch (escolha) {
             case 1:
-                if (login(&industry)) {
+                if (login(&industria)) {
                     printf("\nLogin bem-sucedido!\n");
                 } else {
                     printf("\nLogin falhou. Verifique usuário e senha.\n");
                 }
                 break;
             case 2:
-                registerData(&industry);
+                registrarDados(&industria);
                 break;
             case 3:
                 // Lógica para atualizar quantidades de resíduos e valor estimado
@@ -138,10 +133,10 @@ int main() {
                 printf("Saindo do sistema.\n");
                 break;
             default:
-                printf("Opção inválida. Tente novamente.\n");
+                printf("Opçao invalida. Tente novamente.\n");
         }
 
-    } while (choice != 0);
+    } while (escolha != 0);
 
     return 0;
 }
